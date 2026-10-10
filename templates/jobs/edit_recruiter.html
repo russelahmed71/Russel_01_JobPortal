@@ -1,0 +1,21 @@
+{% extends 'jobs/base.html' %}
+{% block content %}
+<div class="card card-centered">
+    <h3 class="fw-bold text-primary mb-4">🏢 Manage Recruiter Workspace</h3>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+            <label>Company Legal Name</label>
+            <input type="text" name="company_name" value="{{ profile.company_name }}" required placeholder="e.g. Acme Tech Corporation">
+        </div>
+        <div class="form-row">
+            <label>Corporate Portfolio Bio Summary</label>
+            <textarea name="company_description" rows="6" placeholder="Enter corporate context metrics details...">{{ profile.company_description }}</textarea>
+        </div>
+        <div class="flex-buttons">
+            <button type="submit" class="btn-submit">Save Settings Changes</button>
+            <a href="{% url 'dashboard' %}" class="btn-submit btn-cancel">Back</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
