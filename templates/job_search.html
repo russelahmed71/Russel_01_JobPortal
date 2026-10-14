@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Search Available Job Postings</h2>
+    <form method="GET" action="{% url 'job_search' %}" style="margin-bottom: 20px;">
+        <input type="text" name="q" value="{{ query }}" placeholder="Search by title, description, or category..." style="width: 70%; padding: 8px;">
+        <button type="submit" class="btn">Search</button>
+    </form>
+    
+    <hr>
+    
+    {% if results %}
+        <h3>Search Results</h3>
+        {% for job in results %}
+            <div class="job-card">
+                <h4>{{ job.title }}</h4>
+                <p><strong>Category:</strong> {{ job.category }}</p>
+                <p><strong>Required Skills:</strong> {{ job.skills_required }}</p>
+                <p>{{ job.description }}</p>
+                
+                {% if job.id in applied_job_ids %}
+                    <button class="btn" disabled style="background:#6c757d; border-color:#6c757d;">Already Applied</button>
+                {% else %}
+                    <a href="{% url 'apply_job' job.id %}" class="btn btn-success">Apply Now</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No job postings found matching your keyword. Try a different term!</p>
+    {% endif %}
+{% endblock %}

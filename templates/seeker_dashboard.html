@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Job Seeker Dashboard</h2>
+    <p><strong>Welcome,</strong> {{ profile.user.username }}</p>
+    <p><strong>Your Skills:</strong> {{ profile.skills|default:"No skills added yet." }}</p>
+    
+    <hr>
+    
+    <h3>Jobs Matching Your Skills</h3>
+    {% if matched_jobs %}
+        {% for job in matched_jobs %}
+            <div class="job-card">
+                <h4>{{ job.title }}</h4>
+                <p><strong>Category:</strong> {{ job.category }}</p>
+                <p><strong>Required Skills:</strong> {{ job.skills_required }}</p>
+                <p>{{ job.description }}</p>
+                
+                {% if job.id in applied_job_ids %}
+                    <button class="btn" disabled style="background:#6c757d; border-color:#6c757d;">Already Applied</button>
+                {% else %}
+                    <a href="{% url 'apply_job' job.id %}" class="btn btn-success">Apply Instantly</a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No jobs match your current skills layout yet. Try updating your profile details!</p>
+    {% endif %}
+{% endblock %}

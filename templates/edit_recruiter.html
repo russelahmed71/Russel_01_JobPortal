@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Edit Recruiter Profile</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label for="company_name"><strong>Company Name:</strong></label><br>
+            <input type="text" id="company_name" name="company_name" value="{{ profile.company_name }}" style="width: 100%; padding: 8px; margin-top: 5px;">
+        </p>
+        <p>
+            <label for="company_description"><strong>Company Description:</strong></label><br>
+            <textarea id="company_description" name="company_description" rows="5" style="width: 100%; padding: 8px; margin-top: 5px;">{{ profile.company_description }}</textarea>
+        </p>
+        <button type="submit" class="btn">Save Details</button>
+    </form>
+{% endblock %}

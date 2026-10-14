@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Recruiter Dashboard</h2>
+    <p><strong>Company:</strong> {{ profile.company_name|default:"Not specified" }}</p>
+    <a href="{% url 'job_create' %}" class="btn">Post a New Job Opening</a>
+    
+    <hr>
+    
+    <h3>Your Live Job Postings</h3>
+    {% if jobs %}
+        {% for job in jobs %}
+            <div class="job-card">
+                <h4>{{ job.title }}</h4>
+                <p><strong>Category:</strong> {{ job.category }}</p>
+                <p><strong>Required Skills:</strong> {{ job.skills_required }}</p>
+                <p>{{ job.description }}</p>
+                
+                <hr>
+                <h5>People Who Applied:</h5>
+                {% if job.applications.all %}
+                    <ul>
+                    {% for app in job.applications.all %}
+                        <li style="margin-bottom: 8px;">
+                            <strong>Name:</strong> {{ app.jobseeker.username }} | 
+                            <strong>Email:</strong> {{ app.jobseeker.email|default:"No email provided" }} | 
+                            <span style="color: gray;">Applied on: {{ app.applied_at|date:"M d, Y" }}</span>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p style="color: gray;">No applicants yet.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>You haven't published any jobs yet.</p>
+    {% endif %}
+{% endblock %}

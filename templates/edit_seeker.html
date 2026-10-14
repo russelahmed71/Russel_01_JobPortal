@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Edit Seeker Profile</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            <label for="skills"><strong>Your Skills:</strong></label><br>
+            <input type="text" id="skills" name="skills" value="{{ profile.skills }}" style="width: 100%; padding: 8px; margin-top: 5px;">
+        </p>
+        <p>
+            <label for="resume"><strong>Upload Resume Document:</strong></label><br>
+            <input type="file" id="resume" name="resume" style="margin-top: 5px;">
+        </p>
+        <button type="submit" class="btn">Save Profile Changes</button>
+    </form>
+{% endblock %}
